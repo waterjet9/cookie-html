@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>SAT - Scholastic Aptitude Test</title>
+  <link rel="shortcut icon" type="x-icon" href="logo.jpeg">
+</head>
+
+<body>
+
+  <button id="cookieBtn">Get Cookie</button>
+  <div id="message"></div>
+  <div id="content"></div>
+
+  <script>
+    document.getElementById("cookieBtn").addEventListener("click", function () {
+      document.cookie = "cookieName=replitcookie; path=/";
+      alert("Cookie has been set!");
+      
+      // Check for the cookie after setting it
+      displayMessage();
+    });
+
+    // Check for the cookie when the page loads
+    window.onload = function () {
+      displayMessage();
+    };
+
+    function displayMessage() {
+      if (document.cookie.includes("cookieName=replitcookie")) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'index2.html', true);
+
+        xhr.onload = function() {
+          if (xhr.status >= 200 && xhr.status < 400) {
+            document.getElementById('content').innerHTML = xhr.responseText;
+            document.getElementById('cookieBtn').style.display = "none"; // Hide the button
+            
+          }
+        };
+
+        xhr.send();
+      } else {
+        var messageElement = document.getElementById("message");
+        messageElement.textContent = "No cookie found.";
+      }
+    }
+  </script>
+
+</body>
+
+</html>
